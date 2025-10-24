@@ -4,6 +4,7 @@ import (
 	"log"
 	controllers "zarrinpal/controller"
 	"zarrinpal/db"
+	"zarrinpal/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -19,10 +20,16 @@ func main() {
 
 	router := gin.Default()
 	router.POST("/register", controllers.UserRegisterHandler())
-	paymentRoutes := router.Group("/payment")
+	router.POST("/login", controllers.LoginHandler())
+
+	userAuthgroup := router.Group("/")
+	userAuthgroup.Use(middleware.AuthMiddleware())
 	{
-		paymentRoutes.POST("/request", controllers.RequestPaymentHandler())
-		paymentRoutes.GET("/callback", controllers.CallbackHandler())
+		paymentRoutes := router.Group("payment")
+		{
+			paymentRoutes.POST("/request", controllers.RequestPaymentHandler())
+			paymentRoutes.GET("/callback", controllers.CallbackHandler())
+		}
 	}
 
 	log.Println("Server is running on http://localhost:8080")
