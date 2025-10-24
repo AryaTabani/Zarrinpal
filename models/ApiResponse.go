@@ -10,3 +10,6 @@ type APIResponse[T any] struct {
 type PaymentURLResponse struct {
 	PaymentURL string `json:"payment_url"`
 }
+type LoginResponse struct {
+	Token string `json:"token"`
+}
