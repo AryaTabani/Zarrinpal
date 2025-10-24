@@ -25,10 +25,9 @@ func main() {
 	userAuthgroup := router.Group("/")
 	userAuthgroup.Use(middleware.AuthMiddleware())
 	{
-		paymentRoutes := router.Group("payment")
 		{
-			paymentRoutes.POST("/request", controllers.RequestPaymentHandler())
-			paymentRoutes.GET("/callback", controllers.CallbackHandler())
+			userAuthgroup.POST("payment/request", controllers.RequestPaymentHandler())
+			userAuthgroup.GET("payment/callback", controllers.CallbackHandler())
 		}
 	}
 
