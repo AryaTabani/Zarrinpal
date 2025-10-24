@@ -49,11 +49,11 @@ func UserRegisterHandler() gin.HandlerFunc {
 func LoginHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var payload models.LoginPayload
-		err := c.ShouldBindBodyWithJSON(payload)
+		err := c.ShouldBindJSON(&payload)
 		if err != nil {
 			response := models.APIResponse[any]{
 				Success: false,
-				Error:   "invalid request body",
+				Error:   "invalid request body" + err.Error(),
 			}
 			c.JSON(http.StatusBadRequest, response)
 			return
