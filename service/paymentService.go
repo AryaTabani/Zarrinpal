@@ -17,7 +17,7 @@ const zarinpalRequestURL = "https://sandbox.zarinpal.com/pg/v4/payment/request.j
 const zarinpalVerifyURL = "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
 const zarinpalGatewayURL = "https://sandbox.zarinpal.com/pg/StartPay/"
 
-func RequestPayment(ctx context.Context, payload *models.PaymentRequestPayload) (string, error) {
+func RequestPayment(ctx context.Context, payload *models.PaymentRequestPayload, userid int64) (string, error) {
 	merchantID := os.Getenv("ZARINPAL_MERCHANT_ID")
 	callbackURL := "http://localhost:8080/payment/callback"
 
@@ -55,7 +55,7 @@ func RequestPayment(ctx context.Context, payload *models.PaymentRequestPayload) 
 		Description: payload.Description,
 		Authority:   zarinpalResp.Data.Authority,
 	}
-	if err := repository.CreatePayment(ctx, newPayment); err != nil {
+	if err := repository.CreatePayment(ctx, newPayment, userid); err != nil {
 		return "", err
 	}
 
