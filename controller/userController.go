@@ -83,3 +83,24 @@ func LoginHandler() gin.HandlerFunc {
 
 	}
 }
+
+func GetPayementsHistoryHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userID := c.GetInt64("userID")
+		payments, err := services.GetPaymentsHistory(c.Request.Context(), int(userID))
+		if err != nil {
+			response := models.APIResponse[any]{
+				Success: false,
+				Error:   "Failed to retrieve payments history",
+			}
+			c.JSON(http.StatusInternalServerError, response)
+			return
+		}
+		response := models.APIResponse[[]models.Payment]{
+			Success: true,
+			Data:    payments,
+		}
+		c.JSON(http.StatusOK, response)
+
+	}
+}
