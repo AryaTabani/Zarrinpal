@@ -28,6 +28,7 @@ func main() {
 		{
 			userAuthgroup.POST("payment/request", controllers.RequestPaymentHandler())
 			userAuthgroup.GET("payment/callback", controllers.CallbackHandler())
+			userAuthgroup.POST("payment/history", controllers.GetPayementsHistoryHandler())
 		}
 	}
 
