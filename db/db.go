@@ -42,7 +42,9 @@ func createTables() {
         authority VARCHAR(100) NOT NULL UNIQUE,
         ref_id VARCHAR(100),
         status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+		user_id INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );`
 
 	_, err := DB.Exec(createPaymentsTable)
