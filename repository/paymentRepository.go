@@ -6,9 +6,9 @@ import (
 	"zarrinpal/models"
 )
 
-func CreatePayment(ctx context.Context, payment *models.Payment) error {
-	query := `INSERT INTO payments (amount, description, authority, status) VALUES (?, ?, ?, ?)`
-	_, err := db.DB.ExecContext(ctx, query, payment.Amount, payment.Description, payment.Authority, "PENDING")
+func CreatePayment(ctx context.Context, payment *models.Payment, userid int64) error {
+	query := `INSERT INTO payments (amount, description, authority, status, user_id) VALUES (?, ?, ?, ?, ?)`
+	_, err := db.DB.ExecContext(ctx, query, payment.Amount, payment.Description, payment.Authority, "PENDING", userid)
 	return err
 }
 
