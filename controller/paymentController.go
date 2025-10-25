@@ -10,6 +10,7 @@ import (
 
 func RequestPaymentHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		userId := c.GetInt64("userID")
 		var payload models.PaymentRequestPayload
 		if err := c.ShouldBindJSON(&payload); err != nil {
 			c.JSON(http.StatusBadRequest, models.APIResponse[any]{
@@ -19,7 +20,7 @@ func RequestPaymentHandler() gin.HandlerFunc {
 			return
 		}
 
-		paymentURL, err := services.RequestPayment(c.Request.Context(), &payload)
+		paymentURL, err := services.RequestPayment(c.Request.Context(), &payload, userId)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, models.APIResponse[any]{
 				Success: false,
