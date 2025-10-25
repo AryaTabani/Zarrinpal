@@ -10,9 +10,9 @@ type Payment struct {
 }
 
 type PaymentRequestPayload struct {
-	Amount      int    `json:"amount"       binding:"required,gt=1000"`
-	Description string `json:"description"  binding:"required"`
-	Metadata    any    `json:"metadata"`
+	Amount      int      `json:"amount"       binding:"required,gt=1000"`
+	Description string   `json:"description"  binding:"required"`
+	Metadata    Metadata `json:"metadata"`
 }
 
 type Metadata struct {
