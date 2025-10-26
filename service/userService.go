@@ -82,3 +82,7 @@ func generateUserToken(userID int64) (string, error) {
 func GetPaymentsHistory(ctx context.Context, userID int) ([]models.Payment, error) {
 	return repository.GetPaymentsHistory(ctx, userID)
 }
+
+func UpdateProfile(ctx context.Context, userID int64, payload *models.UpdateProfilePayload) error {
+	return repository.UpdateUser(ctx, userID, payload)
+}
