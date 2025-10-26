@@ -26,6 +26,7 @@ func main() {
 	userAuthgroup.Use(middleware.AuthMiddleware())
 	{
 		{
+			userAuthgroup.PUT("/profile", controllers.UpdateUserProfileHandler())
 			userAuthgroup.POST("payment/request", controllers.RequestPaymentHandler())
 			userAuthgroup.GET("payment/callback", controllers.CallbackHandler())
 			userAuthgroup.POST("payment/history", controllers.GetPayementsHistoryHandler())
