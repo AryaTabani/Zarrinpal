@@ -104,3 +104,33 @@ func GetPayementsHistoryHandler() gin.HandlerFunc {
 
 	}
 }
+
+func UpdateUserProfileHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userID := c.GetInt64("userID")
+		var payload models.UpdateProfilePayload
+		err := c.ShouldBindJSON(&payload)
+		if err != nil {
+			response := models.APIResponse[any]{
+				Success: false,
+				Error:   "Invalid request body!",
+			}
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
+		err = services.UpdateProfile(c.Request.Context(), userID, &payload)
+		if err != nil {
+			response := models.APIResponse[any]{
+				Success: false,
+				Error:   "Could not update profile: " + err.Error(),
+			}
+			c.JSON(http.StatusInternalServerError, response)
+			return
+		}
+		response := models.APIResponse[any]{
+			Success: true,
+			Message: "User profile updated successfully",
+		}
+		c.JSON(http.StatusOK, response)
+	}
+}
