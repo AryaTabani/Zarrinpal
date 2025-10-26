@@ -19,3 +19,8 @@ type LoginPayload struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+type UpdateProfilePayload struct {
+	FirstName string `json:"first_name" `
+	LastName  string `json:"last_name" `
+}
