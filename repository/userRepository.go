@@ -43,3 +43,9 @@ func GetPaymentsHistory(ctx context.Context, userId int) ([]models.Payment, erro
 	}
 	return payments, nil
 }
+
+func UpdateUser(ctx context.Context, userID int64, payload *models.UpdateProfilePayload) error {
+	query := `UPDATE users SET first_name = ?,last_name = ? WHERE id = ?`
+	_, err := db.DB.ExecContext(ctx, query, payload.FirstName, payload.LastName, userID)
+	return err
+}
