@@ -134,3 +134,24 @@ func UpdateUserProfileHandler() gin.HandlerFunc {
 		c.JSON(http.StatusOK, response)
 	}
 }
+
+func GetProfileHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userId := c.GetInt64("userID")
+		profile, err := services.GetProfile(c.Request.Context(), userId)
+
+		if err != nil {
+			response := models.APIResponse[any]{
+				Success: false,
+				Error:   "Could not get profile: " + err.Error(),
+			}
+			c.JSON(http.StatusInternalServerError, response)
+			return
+		}
+		response := models.APIResponse[*models.User]{
+			Success: true,
+			Data:    profile,
+		}
+		c.JSON(http.StatusOK, response)
+	}
+}
