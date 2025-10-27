@@ -86,3 +86,11 @@ func GetPaymentsHistory(ctx context.Context, userID int) ([]models.Payment, erro
 func UpdateProfile(ctx context.Context, userID int64, payload *models.UpdateProfilePayload) error {
 	return repository.UpdateUser(ctx, userID, payload)
 }
+
+func GetProfile(ctx context.Context, userID int64) (*models.User, error) {
+	user, err := repository.GetUserByID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
