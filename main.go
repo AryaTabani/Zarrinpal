@@ -27,6 +27,7 @@ func main() {
 	{
 		{
 			userAuthgroup.PUT("/profile", controllers.UpdateUserProfileHandler())
+			userAuthgroup.GET("/profile", controllers.GetProfileHandler())
 			userAuthgroup.POST("payment/request", controllers.RequestPaymentHandler())
 			userAuthgroup.GET("payment/callback", controllers.CallbackHandler())
 			userAuthgroup.POST("payment/history", controllers.GetPayementsHistoryHandler())
