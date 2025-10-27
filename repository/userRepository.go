@@ -24,6 +24,18 @@ func GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
 	)
 	return &user, err
 }
+func GetUserByID(ctx context.Context, userId int64) (*models.User, error) {
+	var user models.User
+	query := `SELECT id, first_name, last_name, email, password_hash FROM users WHERE id=?`
+	err := db.DB.QueryRowContext(ctx, query, userId).Scan(
+		&user.ID,
+		&user.FirstName,
+		&user.LastName,
+		&user.Email,
+		&user.Password_hash,
+	)
+	return &user, err
+}
 
 func GetPaymentsHistory(ctx context.Context, userId int) ([]models.Payment, error) {
 	query := `SELECT id, amount, description, status FROM payments WHERE user_id = ?`
