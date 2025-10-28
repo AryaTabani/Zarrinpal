@@ -4,27 +4,26 @@ A powerful and secure backend service built in Go (Golang) that provides a compl
 
 ## Features
 
-* **Full User Authentication:** Secure user registration (`bcrypt` hashing) and login (`JWT` tokens) [cite: `userService.go`, `userController.go`].
-* **Secure JWT Middleware:** All sensitive routes are protected by JWT authentication middleware [cite: `authmiddleware.go`].
+* **Full User Authentication:** Secure user registration (`bcrypt` hashing) and login (`JWT` tokens) .
+* **Secure JWT Middleware:** All sensitive routes are protected by JWT authentication middleware .
 * **Zarinpal Payment Integration:** Complete payment lifecycle:
-    * Request payment and generate a gateway URL [cite: `paymentService.go`].
-    * Handle and verify the payment callback from Zarinpal [cite: `paymentService.go`].
+    * Request payment and generate a gateway URL.
+    * Handle and verify the payment callback from Zarinpal.
 * **User Payment History:** Authenticated users can retrieve their own transaction history.
 * **User Profile Management:** Authenticated users can view and manage their profile.
-* **3-Tier Architecture:** Clean separation of concerns (Controller, Service, Repository) [cite: `paymentController.go`, `paymentService.go`, `paymentRepository.go`].
+* **3-Tier Architecture:** Clean separation of concerns (Controller, Service, Repository).
 * **Dockerized:** Fully containerized with `Dockerfile` and `docker-compose.yml` for a reproducible environment that includes the Go app and the MySQL database.
-* **Configuration-Based:** All settings are managed via `.env` files [cite: `db.go`, `main.go`].
-
+* **Configuration-Based:** All settings are managed via `.env` files.
 ## Technology Stack
 
 * **Go (Golang)**
-* **Gin:** High-performance HTTP web framework [cite: `main.go`].
-* **MySQL:** Database for storing user and payment data [cite: `db.go`].
+* **Gin:** High-performance HTTP web framework.
+* **MySQL:** Database for storing user and payment data.
 * **Docker & Docker Compose:** For containerization and service orchestration.
-* **`go-sql-driver/mysql`:** MySQL driver for Go [cite: `db.go`].
-* **`golang-jwt/jwt`:** For generating and validating JWTs [cite: `authmiddleware.go`, `userService.go`].
-* **`golang.org/x/crypto/bcrypt`:** For password hashing [cite: `userService.go`].
-* **`joho/godotenv`:** For loading `.env` files [cite: `main.go`].
+* **`go-sql-driver/mysql`:** MySQL driver for Go.
+* **`golang-jwt/jwt`:** For generating and validating JWTs.
+* **`golang.org/x/crypto/bcrypt`:** For password hashing.
+* **`joho/godotenv`:** For loading `.env` files.
 
 ## Getting Started
 
@@ -42,7 +41,7 @@ This is the simplest way to get the entire environment (Go app + MySQL database)
 
 1.  **Clone the repository:**
     ```sh
-    git clone [https://github.com/your-username/your-project-name.git](https://github.com/your-username/your-project-name.git)
+    git clone https://github.com/AryaTabani/Zarrinpal.git
     cd your-project-name
     ```
 
@@ -86,7 +85,7 @@ The application is now running on `http://localhost:8080`.
 
 1.  **Clone and enter the repository:**
     ```sh
-    git clone [https://github.com/your-username/your-project-name.git](https://github.com/your-username/your-project-name.git)
+    git clone https://github.com/AryaTabani/Zarrinpal.git
     cd your-project-name
     ```
 
@@ -172,37 +171,6 @@ All endpoints are prefixed by your `APP_BASE_URL`.
 | `POST` | `/payment/request` | Creates a new payment request with Zarinpal and returns a payment URL [cite: `paymentController.go`]. |
 | `GET` | `/payment/callback` | The callback URL that Zarinpal will redirect to after payment. It verifies the payment and updates its status [cite: `paymentController.go`]. |
 
-## Database Schema
-
-The service will automatically create these tables if they don't exist [cite: `db.go`].
-
-**`users` Table:**
-
-```sql
-CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL
-);
-```
-
-**`payments` Table:**
-
-```sql
-CREATE TABLE IF NOT EXISTS payments (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT, -- (You should add this column and a Foreign Key)
-    amount INT NOT NULL,
-    description TEXT,
-    authority VARCHAR(100) NOT NULL UNIQUE,
-    ref_id VARCHAR(100),
-    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    -- FOREIGN KEY (user_id) REFERENCES users(id) -- (Recommended)
-);
-```
 
 ```
 ```
