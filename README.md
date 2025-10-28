@@ -1,4 +1,3 @@
-````markdown
 # Go Zarinpal Payment Service
 
 A powerful and secure backend service built in Go (Golang) that provides a complete system for user authentication (JWT) and integration with the Zarinpal online payment gateway. This project is fully containerized with Docker for easy setup and deployment.
