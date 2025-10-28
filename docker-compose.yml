@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zarinpal-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    networks:
+      - zarinpal-net
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} 
+    ports:
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - zarinpal-net
+
+networks:
+  zarinpal-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
